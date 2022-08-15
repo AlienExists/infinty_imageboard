@@ -25,7 +25,6 @@ function submit() {
          console.log(data); // JSON data parsed by `response.json()` call
       });
 
-   x.send(null);
    var Myelement = document.querySelector('textarea[name="POST_SEND"]');
    Myelement.value = "";
    location.reload();
