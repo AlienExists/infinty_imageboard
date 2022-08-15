@@ -11,7 +11,7 @@ import (
 type Post struct {
 	ID       int
 	Post     string
-	Unixtime string
+	Unixtime int
 }
 
 func init() {
@@ -29,11 +29,12 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 			var (
 				id       int
 				post     string
-				unixtime string
+				unixtime int
 			)
-			if err := data.Scan(&id, &post, &unixtime); err != nil {
+			if err := data.Scan(&id, &unixtime, &post); err != nil {
 				panic(err)
 			}
+			fmt.Println(post)
 			InputPost := Post{ID: id, Post: post, Unixtime: unixtime}
 			postsArray = append(postsArray, InputPost)
 			if err := data.Err(); err != nil {
