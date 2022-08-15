@@ -32,9 +32,13 @@ func startWeb() {
 	api_ver := "1"
 	fileServer := http.FileServer(http.Dir("/app/app/static"))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+	mux.Handle("/static", http.NotFoundHandler())
+
 	mux.HandleFunc("/api/v"+api_ver+"/posts", app.posts)
+
 	fileServerPage := http.FileServer(http.Dir("/app/app/web_pages"))
 	mux.Handle("/", http.StripPrefix("/", fileServerPage))
+
 	ServerAddress := ":" + os.Getenv("PORT")
 	//ServerAddress := ":9999"
 	fmt.Println("Server starts on :" + os.Getenv("PORT"))
