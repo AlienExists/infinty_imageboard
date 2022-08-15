@@ -19,7 +19,9 @@ function data_func(jsonObj) {
         var id_placehoard = document.createElement('a');
         var text = document.createElement('span');
         var p = document.createElement('p');
+        var datetime = document.createElement('p');
         var tmp = document.createElement('tmp');
+        datetime.classList.add('datetime');
         tmp.textContent = posts_str[i]['Post'];
         ID.classList.add('title');
         text.classList.add('title');
@@ -29,8 +31,12 @@ function data_func(jsonObj) {
         ID.textContent = '#' + posts_str[i]['ID'];
         id_placehoard.textContent = 'ID - '
         text.innerHTML = marked.parse(tmp.innerHTML);
+        let ts = posts_str[i]['Unixtime'];
+        let now = new Date(ts * 1000);
+        datetime.textContent = [now.getFullYear(), (1 + now.getMonth()), now.getDate()].map(d => d < 10 ? '0' + d : d).join('/') + " " + [now.getHours(), now.getMinutes()].map(d => d < 10 ? '0' + d : d).join(':');
         myList.appendChild(id_placehoard);
         myList.appendChild(ID);
+        myList.appendChild(datetime);
         myList.appendChild(p);
         myList.appendChild(text);
         div.appendChild(myList);
