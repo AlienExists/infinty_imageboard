@@ -9,8 +9,8 @@ request.onload = function () {
 }
 function data_func(jsonObj) {
     var myH1 = document.createElement('h1');
-    myH1.textContent = jsonObj['posts'];
-    var posts_str = jsonObj['posts'];
+    myH1.textContent = jsonObj['Posts'];
+    var posts_str = jsonObj['Posts'];
     var div = document.querySelector('div');
     for (var i = 0; i < posts_str.length; i++) {
         var myList = document.createElement('form');
@@ -19,13 +19,13 @@ function data_func(jsonObj) {
         var text = document.createElement('span');
         var p = document.createElement('p');
         var tmp = document.createElement('tmp');
-        tmp.textContent = posts_str[i]['text'];
+        tmp.textContent = posts_str[i]['Post'];
         ID.classList.add('title');
         text.classList.add('title');
         myList.classList.add('form');
-        ID.href = '#' + posts_str[i]['id'];
-        ID.setAttribute('id', posts_str[i]['id']);
-        ID.textContent = '#' + posts_str[i]['id'];
+        ID.href = '#' + posts_str[i]['ID'];
+        ID.setAttribute('id', posts_str[i]['ID']);
+        ID.textContent = '#' + posts_str[i]['ID'];
         id_placehoard.textContent = 'ID - '
         text.innerHTML = marked.parse(tmp.innerHTML);
         myList.appendChild(id_placehoard);
