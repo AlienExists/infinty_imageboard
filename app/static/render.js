@@ -1,9 +1,9 @@
-var requestURL = '/api/v1/get/posts';
+var requestURL = '/api/v1/posts';
 var request = new XMLHttpRequest();
 request.open('GET', requestURL);
 request.responseType = 'json';
 request.send();
-request.onload = function() {
+request.onload = function () {
     var data = request.response;
     data_func(data);
 }
@@ -33,5 +33,5 @@ function data_func(jsonObj) {
         myList.appendChild(p);
         myList.appendChild(text);
         div.appendChild(myList);
-  }
+    }
 }
