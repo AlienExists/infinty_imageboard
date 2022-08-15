@@ -30,7 +30,7 @@ func startWeb() {
 	}
 	mux := http.NewServeMux()
 	api_ver := "1"
-	fileServer := http.FileServer(http.Dir("/static"))
+	fileServer := http.FileServer(http.Dir("/app/app/static"))
 	//mux.Handle("/static", http.NotFoundHandler())
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 	mux.HandleFunc("/api/v"+api_ver+"/posts", app.posts)
