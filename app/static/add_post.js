@@ -27,5 +27,5 @@ function submit() {
 
    var Myelement = document.querySelector('textarea[name="POST_SEND"]');
    Myelement.value = "";
-   location.reload();
+   //location.reload();
 }
