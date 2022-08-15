@@ -31,7 +31,7 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 				post     string
 				unixtime int
 			)
-			if err := data.Scan(&id, &unixtime, &post); err != nil {
+			if err := data.Scan(&id, &post, &unixtime); err != nil {
 				panic(err)
 			}
 			fmt.Println(post)
