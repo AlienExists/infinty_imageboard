@@ -2,21 +2,9 @@
   "name": "Infinty Imageboard",
   "description": "Infinty imageboard",
   "keywords": [
-    "flask",
-    "python"
+    "go"
   ],
   "repository": "https://github.com/OldTyT/infinty_imageboard",
-  "scripts": {
-    "postdeploy": "python db_create.py"
-  },
-  "buildpacks": [
-    {
-      "url": "heroku/python"
-    },
-    {
-      "url": "heroku-community/nginx"
-    }
-  ],
   "addons": [
     "heroku-postgresql"
   ]
