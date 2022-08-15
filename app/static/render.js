@@ -11,6 +11,7 @@ function data_func(jsonObj) {
     var myH1 = document.createElement('h1');
     myH1.textContent = jsonObj['Posts'];
     var posts_str = jsonObj['Posts'];
+    console.log(posts_str)
     var div = document.querySelector('div');
     for (var i = 0; i < posts_str.length; i++) {
         var myList = document.createElement('form');
