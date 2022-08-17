@@ -1,31 +1,20 @@
 function submit() {
-   var data_send = document.getElementById("POST_SEND").value;
+   var url = "/api/v1/get/posts";
+   var data = document.getElementById("post_txt").value;
+   var xhr = new XMLHttpRequest();
+   xhr.open("PUT", url);
 
-   // Пример отправки POST запроса:
-   async function postData(url = '', data = {}) {
-      // Default options are marked with *
-      const response = await fetch(url, {
-         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-         mode: 'cors', // no-cors, *cors, same-origin
-         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-         credentials: 'same-origin', // include, *same-origin, omit
-         headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-         },
-         redirect: 'follow', // manual, *follow, error
-         referrerPolicy: 'no-referrer', // no-referrer, *client
-         body: JSON.stringify(data) // body data type must match "Content-Type" header
-      });
-      return await response.json(); // parses JSON response into native JavaScript objects
-   }
+   xhr.setRequestHeader("Content-Type", "application/json");
 
-   postData('/api/v1/posts?post=' + data_send)
-      .then((data) => {
-         console.log(data); // JSON data parsed by `response.json()` call
-      });
+   xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+         var Myelement = document.querySelector('textarea[name="post_txt"]');
+         Myelement.value = "";
+         console.log(xhr.status);
+         console.log(xhr.responseText);
+         location.reload();
+      }
+   };
 
-   var Myelement = document.querySelector('textarea[name="POST_SEND"]');
-   Myelement.value = "";
-   //location.reload();
+   xhr.send(data);
 }

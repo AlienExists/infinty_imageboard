@@ -19,7 +19,8 @@ func init() {
 }
 
 func (app *application) posts(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
+	switch r.Method {
+	case "GET":
 		data, error := app.sql.Query("SELECT * FROM imageboard_db")
 		if error != nil {
 			fmt.Println(error)
@@ -54,24 +55,22 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Write([]byte(jsonData))
 		return
-	}
-	if r.Method == http.MethodPost {
-		r.ParseForm()
-		for key, value := range r.Form {
-			if key == "post" {
-				URLQuery := `INSERT INTO imageboard_db (post, unixtime) VALUES($1,$2)`
-				unixtime := strconv.FormatInt(time.Now().Unix(), 10)
-				_, error := app.sql.Exec(URLQuery, value[0], unixtime)
-				if error != nil {
-					fmt.Println(error)
-					w.Write([]byte("{'message': 'Error'}"))
-					return
-				}
-				w.Write([]byte("{'message': 'OK'}"))
-				return
-			}
+	case "POST":
+		if err := r.ParseForm(); err != nil {
+			fmt.Fprintf(w, "ParseForm() err: %v", err)
+			return
 		}
-		w.Write([]byte(r.URL.Query().Get("post")))
+		URLQuery := `INSERT INTO imageboard_db (post, unixtime) VALUES($1,$2)`
+		unixtime := strconv.FormatInt(time.Now().Unix(), 10)
+		_, error := app.sql.Exec(URLQuery, r.FormValue("post_txt"), unixtime)
+		if error != nil {
+			fmt.Println(error)
+			w.Write([]byte("{'message': 'Error'}"))
+			return
+		}
+		w.Write([]byte("{'message': 'OK'}"))
+		return
+
 		return
 	}
 
