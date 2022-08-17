@@ -1,6 +1,6 @@
 function submit() {
    var url = "/api/v1/get/posts";
-   var data = document.getElementById("post_txt").value;
+   var data = document.getElementById("POST_SEND").value;
    var xhr = new XMLHttpRequest();
    xhr.open("PUT", url);
 
