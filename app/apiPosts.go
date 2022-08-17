@@ -35,7 +35,6 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 			if err := data.Scan(&id, &post, &unixtime); err != nil {
 				panic(err)
 			}
-			fmt.Println(post)
 			InputPost := Post{ID: id, Post: post, Unixtime: unixtime}
 			postsArray = append(postsArray, InputPost)
 			if err := data.Err(); err != nil {
@@ -62,7 +61,21 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 		}
 		URLQuery := `INSERT INTO imageboard_db (post, unixtime) VALUES($1,$2)`
 		unixtime := strconv.FormatInt(time.Now().Unix(), 10)
-		_, error := app.sql.Exec(URLQuery, r.FormValue("post_txt"), unixtime)
+		d := json.NewDecoder(r.Body)
+		d.DisallowUnknownFields() // catch unwanted fields
+
+		// anonymous struct type: handy for one-time use
+		p := struct {
+			PostData *string `json:"PostData"` // pointer so we can test for field absence
+		}{}
+		err := d.Decode(&p)
+		if err != nil {
+			// bad JSON or unrecognized json field
+			fmt.Println(err)
+			//http.Error(r, err.Error(), http.StatusBadRequest)
+			return
+		}
+		_, error := app.sql.Exec(URLQuery, *p.PostData, unixtime)
 		if error != nil {
 			fmt.Println(error)
 			w.Write([]byte("{'message': 'Error'}"))
@@ -70,7 +83,8 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Write([]byte("{'message': 'OK'}"))
 		return
-
+		// }
+		w.Write([]byte("{'message': 'Error'}"))
 		return
 	}
 
