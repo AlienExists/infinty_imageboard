@@ -2,7 +2,7 @@ function submit() {
    var url = "/api/v1/posts";
    var data = document.getElementById("POST_SEND").value;
    var xhr = new XMLHttpRequest();
-   xhr.open("PUT", url);
+   xhr.open("POST", url);
 
    xhr.setRequestHeader("Content-Type", "application/json");
 
