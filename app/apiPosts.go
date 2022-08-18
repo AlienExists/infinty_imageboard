@@ -21,7 +21,7 @@ func init() {
 func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		data, error := app.sql.Query("SELECT * FROM ORDER BY ID DESC")
+		data, error := app.sql.Query("SELECT * FROM imageboard_db ORDER BY ID DESC")
 		if error != nil {
 			fmt.Println(error)
 		}
