@@ -68,6 +68,8 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 		p := struct {
 			PostData *string `json:"PostData"` // pointer so we can test for field absence
 		}{}
+		fmt.Println(r.Body)
+		fmt.Println(d)
 		err := d.Decode(&p)
 		if err != nil {
 			// bad JSON or unrecognized json field
