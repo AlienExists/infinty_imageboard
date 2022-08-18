@@ -21,7 +21,7 @@ func init() {
 func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		data, error := app.sql.Query("SELECT * FROM imageboard_db")
+		data, error := app.sql.Query("SELECT * FROM ORDER BY ID DESC")
 		if error != nil {
 			fmt.Println(error)
 		}
@@ -59,7 +59,7 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "ParseForm() err: %v", err)
 			return
 		}
-		URLQuery := `INSERT INTO imageboard_db (post, unixtime) VALUES($1,$2)`
+		URLQuery := `INSERT INTO imageboard_db (Post, UnixTime) VALUES($1,$2)`
 		unixtime := strconv.FormatInt(time.Now().Unix(), 10)
 		d := json.NewDecoder(r.Body)
 		d.DisallowUnknownFields() // catch unwanted fields
@@ -68,11 +68,10 @@ func (app *application) posts(w http.ResponseWriter, r *http.Request) {
 		p := struct {
 			PostData *string `json:"PostData"` // pointer so we can test for field absence
 		}{}
-		fmt.Println(r.Body)
-		fmt.Println(d)
 		err := d.Decode(&p)
 		if err != nil {
 			// bad JSON or unrecognized json field
+			panic(err)
 			fmt.Println(err)
 			//http.Error(r, err.Error(), http.StatusBadRequest)
 			return

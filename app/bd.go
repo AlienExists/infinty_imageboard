@@ -21,9 +21,9 @@ func openDB() (*sql.DB, error) {
 		return nil, err
 	}
 	URLTable := `CREATE TABLE IF NOT EXISTS imageboard_db (
-		id SERIAL,
-		post TEXT,
-		unixtime INTEGER);`
+		ID SERIAL,
+		Post TEXT,
+		UnixTime INTEGER);`
 	Query, err := db.Prepare(URLTable)
 	if err != nil {
 		panic(err)
