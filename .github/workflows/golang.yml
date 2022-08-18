@@ -1,4 +1,4 @@
-name: golang-build
+name: golang-test-build
 on:
   push:
   pull_request:
